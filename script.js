@@ -24,7 +24,6 @@ botaoAtualizar.addEventListener("click", () => {
   localStorage.removeItem("acessos");
   numeroAcessos.textContent = "1.248";
 });
-});
 
 // A cada digitação, comparamos a busca com o conteúdo de cada linha.
 campoFiltro.addEventListener("input", () => {
