@@ -26,10 +26,10 @@ botaoAtualizar.addEventListener("click", () => {
    botaoRestaurar.addEventListener("click", () => {
   localStorage.removeItem("acessos");
   numeroAcessos.textContent = "1.248";
-      botaoAdicionarPessoa.addEventListener("click", () => {
-  const nome = campoNovoNome.value.trim();
-  if (nome === "") return;
+      }); 
 
+// fecha o evento Restaurar acessos
+      function criarLinhaPessoa(nome) {
   const novaLinha = document.createElement("tr");
 
   const pessoa = document.createElement("td");
@@ -48,12 +48,17 @@ botaoAtualizar.addEventListener("click", () => {
   status.append(etiqueta);
 
   novaLinha.append(pessoa, atividade, data, status);
-  linhasTabela.append(novaLinha);
+  return novaLinha;
+}
+      botaoAdicionarPessoa.addEventListener("click", () => {
+  const nome = campoNovoNome.value.trim();
+  if (nome === "") return;
+
+  linhasTabela.append(criarLinhaPessoa(nome));
 
   campoNovoNome.value = "";
   campoFiltro.value = "";
   campoFiltro.dispatchEvent(new Event("input"));
-});
 });
 
 // A cada digitação, comparamos a busca com o conteúdo de cada linha.
