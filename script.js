@@ -11,6 +11,7 @@ botaoAtualizar.addEventListener("click", () => {
   const valorAtual = Number(numeroAcessos.textContent.replaceAll(".", ""));
   const novoValor = valorAtual + 10;
   numeroAcessos.textContent = novoValor.toLocaleString("pt-BR");
+  localStorage.setItem("acessos", novoValor);
 });
 
 // A cada digitação, comparamos a busca com o conteúdo de cada linha.
@@ -27,6 +28,12 @@ campoFiltro.addEventListener("input", () => {
   contadorLinhas.textContent = "1 registro encontrado";
 } else {
   contadorLinhas.textContent = quantidadeVisivel + " registros encontrados";
+}
+    const acessosSalvos = localStorage.getItem("acessos");
+
+if (acessosSalvos !== null) {
+  numeroAcessos.textContent =
+    Number(acessosSalvos).toLocaleString("pt-BR");
 }
   });
 
