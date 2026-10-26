@@ -4,6 +4,7 @@ const botaoAtualizar = document.querySelector("#atualizar-acessos");
 const campoFiltro = document.querySelector("#filtro-tabela");
 const linhas = document.querySelectorAll("#linhas-tabela tr");
 const mensagemVazia = document.querySelector("#sem-resultados");
+const contadorLinhas = document.querySelector("#contador-linhas");
 
 // No clique, somamos um ao número de exemplo e atualizamos o cartão.
 botaoAtualizar.addEventListener("click", () => {
@@ -22,6 +23,11 @@ campoFiltro.addEventListener("input", () => {
     const corresponde = textoLinha.includes(busca);
     linha.hidden = !corresponde;
     if (corresponde) quantidadeVisivel += 1;
+    if (quantidadeVisivel === 1) {
+  contadorLinhas.textContent = "1 registro encontrado";
+} else {
+  contadorLinhas.textContent = quantidadeVisivel + " registros encontrados";
+}
   });
 
   // Mostramos esta mensagem somente quando o filtro não encontra nenhuma linha.
