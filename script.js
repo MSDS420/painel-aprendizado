@@ -20,6 +20,7 @@ botaoAtualizar.addEventListener("click", () => {
   const novoValor = valorAtual + 10;
   numeroAcessos.textContent = novoValor.toLocaleString("pt-BR");
   localStorage.setItem("acessos", novoValor);
+   });
    botaoRestaurar.addEventListener("click", () => {
   localStorage.removeItem("acessos");
   numeroAcessos.textContent = "1.248";
