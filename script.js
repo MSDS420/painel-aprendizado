@@ -7,6 +7,7 @@ const linhas = document.querySelectorAll("#linhas-tabela tr");
 const mensagemVazia = document.querySelector("#sem-resultados");
 const contadorLinhas = document.querySelector("#contador-linhas");
 const acessosSalvos = localStorage.getItem("acessos");
+const botaoRestaurar = document.querySelector("#restaurar-acessos");
 
 if (acessosSalvos !== null) {
   numeroAcessos.textContent =
@@ -19,6 +20,10 @@ botaoAtualizar.addEventListener("click", () => {
   const novoValor = valorAtual + 10;
   numeroAcessos.textContent = novoValor.toLocaleString("pt-BR");
   localStorage.setItem("acessos", novoValor);
+   botaoRestaurar.addEventListener("click", () => {
+  localStorage.removeItem("acessos");
+  numeroAcessos.textContent = "1.248";
+});
 });
 
 // A cada digitação, comparamos a busca com o conteúdo de cada linha.
