@@ -1,35 +1,28 @@
-// Buscamos os elementos do HTML pelo id para poder reagir ao que acontece na página.
-   
+// Conecta o JavaScript aos elementos do HTML.
 const numeroAcessos = document.querySelector("#acessos");
 const botaoAtualizar = document.querySelector("#atualizar-acessos");
+const botaoRestaurar = document.querySelector("#restaurar-acessos");
 const campoFiltro = document.querySelector("#filtro-tabela");
 const linhasTabela = document.querySelector("#linhas-tabela");
 const campoNovoNome = document.querySelector("#novo-nome");
 const botaoAdicionarPessoa = document.querySelector("#adicionar-pessoa");
 const mensagemVazia = document.querySelector("#sem-resultados");
 const contadorLinhas = document.querySelector("#contador-linhas");
-const acessosSalvos = localStorage.getItem("acessos");
-const botaoRestaurar = document.querySelector("#restaurar-acessos");
 
+const ACESSOS_INICIAIS = 1248;
+const acessosSalvos = localStorage.getItem("acessos");
+const pessoasSalvas = JSON.parse(
+  localStorage.getItem("pessoas-adicionadas") || "[]"
+);
+
+// Recupera os acessos salvos anteriormente neste navegador.
 if (acessosSalvos !== null) {
   numeroAcessos.textContent =
     Number(acessosSalvos).toLocaleString("pt-BR");
 }
 
-// No clique, somamos um ao número de exemplo e atualizamos o cartão.
-botaoAtualizar.addEventListener("click", () => {
-  const valorAtual = Number(numeroAcessos.textContent.replaceAll(".", ""));
-  const novoValor = valorAtual + 10;
-  numeroAcessos.textContent = novoValor.toLocaleString("pt-BR");
-  localStorage.setItem("acessos", novoValor);
-   });
-   botaoRestaurar.addEventListener("click", () => {
-  localStorage.removeItem("acessos");
-  numeroAcessos.textContent = "1.248";
-      }); 
-
-// fecha o evento Restaurar acessos
-      function criarLinhaPessoa(nome) {
+// Monta uma linha da tabela para uma pessoa.
+function criarLinhaPessoa(nome, dataRegistro) {
   const novaLinha = document.createElement("tr");
 
   const pessoa = document.createElement("td");
@@ -39,7 +32,7 @@ botaoAtualizar.addEventListener("click", () => {
   atividade.textContent = "Cadastro";
 
   const data = document.createElement("td");
-  data.textContent = new Date().toLocaleDateString("pt-BR");
+  data.textContent = dataRegistro;
 
   const status = document.createElement("td");
   const etiqueta = document.createElement("span");
@@ -50,37 +43,83 @@ botaoAtualizar.addEventListener("click", () => {
   novaLinha.append(pessoa, atividade, data, status);
   return novaLinha;
 }
-      botaoAdicionarPessoa.addEventListener("click", () => {
+
+// Recria na tabela as pessoas guardadas neste navegador.
+pessoasSalvas.forEach((pessoaSalva) => {
+  linhasTabela.append(
+    criarLinhaPessoa(pessoaSalva.nome, pessoaSalva.data)
+  );
+});
+
+// Aplica o filtro e atualiza o contador.
+function aplicarFiltro() {
+  const busca = campoFiltro.value.trim().toLocaleLowerCase("pt-BR");
+  const linhas = document.querySelectorAll("#linhas-tabela tr");
+  let quantidadeVisivel = 0;
+
+  linhas.forEach((linha) => {
+    const textoLinha = linha.textContent.toLocaleLowerCase("pt-BR");
+    const corresponde = textoLinha.includes(busca);
+
+    linha.hidden = !corresponde;
+    if (corresponde) quantidadeVisivel += 1;
+  });
+
+  if (quantidadeVisivel === 1) {
+    contadorLinhas.textContent = "1 registro encontrado";
+  } else {
+    contadorLinhas.textContent =
+      quantidadeVisivel + " registros encontrados";
+  }
+
+  mensagemVazia.hidden = quantidadeVisivel > 0;
+}
+
+// O botão soma 10 e guarda o novo valor.
+botaoAtualizar.addEventListener("click", () => {
+  const valorAtual = Number(
+    numeroAcessos.textContent.replaceAll(".", "")
+  );
+  const novoValor = valorAtual + 10;
+
+  numeroAcessos.textContent = novoValor.toLocaleString("pt-BR");
+  localStorage.setItem("acessos", novoValor);
+});
+
+// O botão de restauração apaga o valor salvo e volta ao inicial.
+botaoRestaurar.addEventListener("click", () => {
+  localStorage.removeItem("acessos");
+  numeroAcessos.textContent =
+    ACESSOS_INICIAIS.toLocaleString("pt-BR");
+});
+
+// O botão cria uma pessoa e salva seus dados no navegador.
+botaoAdicionarPessoa.addEventListener("click", () => {
   const nome = campoNovoNome.value.trim();
   if (nome === "") return;
 
-  linhasTabela.append(criarLinhaPessoa(nome));
+  const pessoaNova = {
+    nome: nome,
+    data: new Date().toLocaleDateString("pt-BR"),
+  };
+
+  pessoasSalvas.push(pessoaNova);
+  localStorage.setItem(
+    "pessoas-adicionadas",
+    JSON.stringify(pessoasSalvas)
+  );
+
+  linhasTabela.append(
+    criarLinhaPessoa(pessoaNova.nome, pessoaNova.data)
+  );
 
   campoNovoNome.value = "";
   campoFiltro.value = "";
-  campoFiltro.dispatchEvent(new Event("input"));
+  aplicarFiltro();
 });
 
-// A cada digitação, comparamos a busca com o conteúdo de cada linha.
-campoFiltro.addEventListener("input", () => {
-  const busca = campoFiltro.value.trim().toLocaleLowerCase("pt-BR");
-  let quantidadeVisivel = 0;
-   const linhas = document.querySelectorAll("#linhas-tabela tr");
+// Atualiza filtro e contador enquanto você digita.
+campoFiltro.addEventListener("input", aplicarFiltro);
 
-linhas.forEach((linha) => {
-  const textoLinha = linha.textContent.toLocaleLowerCase("pt-BR");
-  const corresponde = textoLinha.includes(busca);
-
-  linha.hidden = !corresponde;
-  if (corresponde) quantidadeVisivel += 1;
-}); // fecha o forEach
-
-if (quantidadeVisivel === 1) {
-  contadorLinhas.textContent = "1 registro encontrado";
-} else {
-  contadorLinhas.textContent = quantidadeVisivel + " registros encontrados";
-}
-
-  // Mostramos esta mensagem somente quando o filtro não encontra nenhuma linha.
-  mensagemVazia.hidden = quantidadeVisivel > 0;
-});
+// Conta todas as linhas também quando a página abre.
+aplicarFiltro();
