@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Painel de aprendizado | Projeto 1</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="pagina">
+    <header class="cabecalho">
+      <div>
+        <p class="sobrelinha">PROJETO 01 · PAINEL DE APRENDIZADO</p>
+        <h1>Visão geral</h1>
+        <p class="descricao">Um pequeno painel para praticar HTML, CSS e JavaScript com dados de exemplo.</p>
+      </div>
+      <span class="status"><span class="status-ponto"></span> Dados fictícios</span>
+    </header>
+    <section class="cartoes" aria-label="Indicadores de exemplo">
+      <article class="cartao"><p class="rotulo">Acessos este mês</p><p class="numero" id="acessos">1.248</p><p class="detalhe">Visitas registradas no exemplo</p></article>
+      <article class="cartao"><p class="rotulo">Novos cadastros</p><p class="numero">420</p><p class="detalhe">Pessoas que chegaram este mês</p></article>
+      <article class="cartao"><p class="rotulo">Pedidos concluídos</p><p class="numero">312</p><p class="detalhe">Pedidos fictícios finalizados</p></article>
+    </section>
+    <section class="painel" aria-labelledby="titulo-tabela">
+      <div class="painel-cabecalho">
+        <div><h2 id="titulo-tabela">Atividade recente</h2><p>Consulte e filtre os registros de exemplo.</p></div>
+        <button class="botao" id="atualizar-acessos" type="button">Atualizar acessos <span aria-hidden="true">↗</span></button>
+      </div>
+      <label class="rotulo-filtro" for="filtro-tabela">Filtrar por nome, atividade ou status</label>
+      <input class="campo-filtro" id="filtro-tabela" type="search" placeholder="Ex.: Marina ou concluído">
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr><th scope="col">Pessoa</th><th scope="col">Atividade</th><th scope="col">Data</th><th scope="col">Status</th></tr></thead>
+          <tbody id="linhas-tabela">
+           <tr><td><span class="avatar avatar-amarelo">JP</span> Jany Peixoto</td><td>Cadastro</td><td>25 out, 2026</td><td><span class="etiqueta concluido">Concluído</span></td></tr>
+            <tr><td><span class="avatar avatar-azul">MC</span> Marina Costa</td><td>Cadastro</td><td>24 out, 2026</td><td><span class="etiqueta concluido">Concluído</span></td></tr>
+            <tr><td><span class="avatar avatar-lilas">RA</span> Rafael Alves</td><td>Pedido #1042</td><td>23 out, 2026</td><td><span class="etiqueta andamento">Em andamento</span></td></tr>
+            <tr><td><span class="avatar avatar-verde">BS</span> Bianca Souza</td><td>Pedido #1041</td><td>22 out, 2026</td><td><span class="etiqueta concluido">Concluído</span></td></tr>
+            <tr><td><span class="avatar avatar-laranja">LM</span> Lucas Mendes</td><td>Cadastro</td><td>21 out, 2026</td><td><span class="etiqueta revisao">Em revisão</span></td></tr>
+            <tr><td><span class="avatar avatar-rosa">JP</span> Júlia Prado</td><td>Pedido #1039</td><td>20 out, 2026</td><td><span class="etiqueta concluido">Concluído</span></td></tr>
+          </tbody>
+        </table>
+        <p class="sem-resultados" id="sem-resultados" hidden>Nenhuma linha corresponde à sua busca.</p>
+      </div>
+    </section>
+    <footer>Feito para aprender, uma linha de código por vez.</footer>
+  </main>
+</body>
+</html>

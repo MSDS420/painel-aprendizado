@@ -1,0 +1,60 @@
+/* Ajuste estas variáveis para personalizar rapidamente as cores do painel. */
+:root {
+  color-scheme: light;
+  --fundo: #f4f7fb;
+  --texto: #172033;
+  --suave: #687386;
+  --borda: #e7ebf2;
+  --azul: #4f6bed;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fundo); color: var(--texto); }
+button, input { font: inherit; }
+.pagina { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 54px 0 30px; }
+.cabecalho { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
+.sobrelinha { margin: 0 0 10px; color: var(--azul); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+h1 { margin: 0; font-size: clamp(2rem, 5vw, 2.65rem); letter-spacing: -.045em; }
+.descricao { margin: 9px 0 0; color: var(--suave); line-height: 1.6; }
+.status { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--borda); border-radius: 999px; background: white; color: #566174; font-size: .82rem; white-space: nowrap; }
+.status-ponto { width: 8px; height: 8px; border-radius: 50%; background: #28b57a; }
+.cartoes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-bottom: 24px; }
+.cartao, .painel { border: 1px solid var(--borda); border-radius: 16px; background: white; box-shadow: 0 8px 28px rgb(27 42 73 / 4%); }
+.cartao { padding: 22px; }
+.rotulo { margin: 0; color: var(--suave); font-size: .88rem; }
+.numero { margin: 12px 0 5px; font-size: 2rem; font-weight: 750; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.detalhe { margin: 0; color: #8992a2; font-size: .8rem; }
+.painel { padding: 24px; }
+.painel-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+h2 { margin: 0; font-size: 1.13rem; letter-spacing: -.02em; }
+.painel-cabecalho p { margin: 6px 0 0; color: var(--suave); font-size: .86rem; }
+.botao { border: 0; border-radius: 9px; padding: 11px 14px; background: var(--azul); color: white; font-weight: 650; cursor: pointer; transition: background .2s, transform .2s; }
+.botao:hover { background: #3d58d4; transform: translateY(-1px); }
+.botao:focus-visible, .campo-filtro:focus-visible { outline: 3px solid #bdc8ff; outline-offset: 2px; }
+.rotulo-filtro { display: block; margin-bottom: 7px; color: #566174; font-size: .8rem; font-weight: 650; }
+.campo-filtro { width: min(100%, 380px); margin-bottom: 20px; padding: 11px 13px; border: 1px solid #dce2ec; border-radius: 9px; color: var(--texto); background: white; }
+.campo-filtro::placeholder { color: #9aa3b1; }
+.tabela-rolagem { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+th { padding: 12px 14px; border-bottom: 1px solid var(--borda); color: #818b9b; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+td { padding: 14px; border-bottom: 1px solid #eef1f5; color: #4b5668; font-size: .86rem; }
+tbody tr:last-child td { border-bottom: 0; }
+td:first-child { color: var(--texto); font-weight: 620; }
+.avatar { display: inline-grid; width: 30px; height: 30px; margin-right: 9px; place-items: center; border-radius: 50%; font-size: .66rem; font-weight: 750; vertical-align: middle; }
+.avatar-azul { background: #e8edff; color: #4963dc; }.avatar-lilas { background: #f0eaff; color: #8255cb; }.avatar-verde { background: #e2f7ee; color: #24875d; }.avatar-laranja { background: #fff0df; color: #bf762a; }.avatar-rosa { background: #ffe9ee; color: #bf5470; }
+.etiqueta { display: inline-block; padding: 5px 9px; border-radius: 999px; font-size: .73rem; font-weight: 650; }
+.concluido { background: #e8f7ef; color: #238153; }.andamento { background: #fff4df; color: #a96c0c; }.revisao { background: #f0eaff; color: #7650b5; }
+.sem-resultados { margin: 0; padding: 22px 14px; color: var(--suave); text-align: center; }
+footer { padding: 22px 0 0; color: #929baa; font-size: .78rem; text-align: center; }
+/* Em telas estreitas, os cartões empilham e a tabela ganha rolagem horizontal. */
+@media (max-width: 700px) {
+  .pagina { width: min(100% - 28px, 540px); padding-top: 34px; }
+  .cabecalho { flex-direction: column; gap: 16px; }
+  .cartoes { grid-template-columns: 1fr; gap: 12px; }
+  .cartao { padding: 18px; }
+  .numero { margin-top: 8px; }
+  .painel { padding: 18px 14px; }
+  .painel-cabecalho { align-items: flex-start; flex-direction: column; }
+  .botao { width: 100%; }
+  th, td { padding: 12px 10px; }
+}
